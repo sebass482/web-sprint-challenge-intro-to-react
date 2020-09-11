@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import './App.css';
 import Character from './components/Character'
 import axios from 'axios'
+import { ThemeProvider } from 'styled-components'
+import theme from './theme'
 
 
 const App = () => {
@@ -25,6 +27,10 @@ useEffect(()=>{
       console.log(res.data.results)
       setCharacters(res.data.results)
     })
+    .catch((err)=>{
+      console.log(err)
+      alert('Bad api call')
+    })
   } , [])
 
   console.log(characters)
@@ -34,15 +40,16 @@ useEffect(()=>{
 
 
   return (
+    <ThemeProvider theme={theme}>
     <div className="App">
-      <h1 className="Header">Characters</h1>
-      <Character />
+      <h1 className="Header">R&M <br></br>Characters</h1>
       {
         characters.map((character,index)=>(
-        <img src={character.image} alt={character.name}/> 
+        <Character src={character.image} alt={character.name}/> 
         ))
       }
     </div>
+    </ThemeProvider>
   );
 }
 
